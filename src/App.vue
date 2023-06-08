@@ -1,49 +1,26 @@
+@@ -0,0 +1,25 @@
 <!--
-A nested tree component that recursively renders itself.
-You can double click on an item to turn it into a folder.
+An example of creating a reusable grid component and using it with external data.
 -->
 
 <script setup>
+import DemoGrid from './components/Grid.vue'
 import { ref } from 'vue'
-import TreeItem from './components/TreeItem.vue'
 
-const treeData = ref({
-  name: 'Bysuco',
-  children: [
-    { name: 'menu' },
-    { name: 'item' },
-    {
-      name: 'child folder',
-      children: [
-        {
-          name: 'child folder',
-          children: [{ name: 'hello' }, { name: 'world' }]
-        },
-        { name: 'hello' },
-        { name: 'world' },
-        {
-          name: 'child folder',
-          children: [{ name: 'hello' }, { name: 'world' }]
-        }
-      ]
-    }
-  ]
-})
+const searchQuery = ref('')
+const gridColumns = ['name', 'power']
+const gridData = [
+  { name: 'bysuco', power: Infinity },
+  { name: 'break', power: 9000 },
+  { name: 'cread', power: 7000 },
+  { name: 'jomalon', power: 8000 }
+]
 </script>
 
 <template>
-  <ul>
-    <TreeItem class="item" :model="treeData"></TreeItem>
-  </ul>
+  <form id="search">
+    Search <input name="query" v-model="searchQuery">
+  </form>
+  <DemoGrid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
+  </DemoGrid>
 </template>
-
-<style>
-.item {
-  cursor: pointer;
-  line-height: 1.5;
-}
-
-.bold {
-  font-weight: bold;
-}
-</style>
